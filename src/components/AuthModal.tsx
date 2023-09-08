@@ -10,20 +10,37 @@ import {
   Input,
   ModalFooter,
   Button,
-  Flex,
-  SimpleGrid,
   Grid,
   GridItem,
-  Spacer,
   Link,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
 export default function AuthModal({ isOpen, onClose }: any) {
   const [authType, setAuthType] = useState("Login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const switchAuthType = () =>
     authType === "Login" ? setAuthType("Register") : setAuthType("Login");
+
+  const auth = async () => {
+    const authData = {
+      email: email,
+      pwd: password,
+    };
+
+    await fetch("http://localhost:8000/api/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(authData),
+    });
+
+    location.assign("/");
+  };
 
   return (
     <>
@@ -35,11 +52,18 @@ export default function AuthModal({ isOpen, onClose }: any) {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Username</FormLabel>
-              <Input placeholder="username@email.com" />
+              <Input
+                placeholder="username@email.com"
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Password</FormLabel>
-              <Input placeholder="password" type="password" />
+              <Input
+                placeholder="password"
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </FormControl>
           </ModalBody>
           <ModalFooter>
@@ -49,7 +73,7 @@ export default function AuthModal({ isOpen, onClose }: any) {
               w="100%"
             >
               <GridItem colSpan={2} rowSpan={1} mr="1em">
-                <Button colorScheme="blue" w="100%">
+                <Button colorScheme="blue" w="100%" onClick={auth}>
                   {authType}
                 </Button>
               </GridItem>
