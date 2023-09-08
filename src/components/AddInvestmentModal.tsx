@@ -10,6 +10,7 @@ import {
   Input,
   ModalFooter,
   Button,
+  Select,
 } from "@chakra-ui/react";
 
 export default function AddInvestmentModal({ isOpen, onClose }: any) {
@@ -36,6 +37,13 @@ export default function AddInvestmentModal({ isOpen, onClose }: any) {
             <FormControl>
               <FormLabel>Price</FormLabel>
               <Input placeholder="100.0" />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Currency</FormLabel>
+              <Select defaultValue="usd">
+                <option value="usd">USD</option>
+                <option value="eur">EUR</option>
+              </Select>
             </FormControl>
           </ModalBody>
           <ModalFooter>
