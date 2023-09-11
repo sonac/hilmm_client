@@ -12,8 +12,45 @@ import {
   Button,
   Select,
 } from "@chakra-ui/react";
+import { useState } from "react";
+
+/*
+{
+  "ticker": "META",
+  "name": "Meta",
+  "paid": 232,
+  "amount": 2,
+  "currency": "EUR"
+}*/
 
 export default function AddInvestmentModal({ isOpen, onClose }: any) {
+  const [invName, setInvName] = useState("");
+  const [tickerName, setTickerName] = useState("");
+  const [amnt, setAmnt] = useState("");
+  const [price, setPrice] = useState("");
+  const [cur, setCur] = useState("EUR");
+
+  const addInvestment = async () => {
+    const assetData = {
+      ticker: tickerName,
+      name: invName,
+      amount: parseFloat(amnt),
+      paid: parseFloat(price),
+      currency: cur,
+    };
+
+    await fetch("http://localhost:8000/api/asset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(assetData),
+    });
+
+    location.assign("/");
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -24,30 +61,47 @@ export default function AddInvestmentModal({ isOpen, onClose }: any) {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Investment Name</FormLabel>
-              <Input placeholder="Stock" />
+              <Input
+                placeholder="Stock"
+                onChange={(e) => setInvName(e.target.value)}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Ticker</FormLabel>
-              <Input placeholder="STCK" />
+              <Input
+                placeholder="STCK"
+                onChange={(e) => setTickerName(e.target.value)}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Amount</FormLabel>
-              <Input placeholder="1.0" />
+              <Input
+                placeholder="1.0"
+                type="number"
+                onChange={(e) => setAmnt(e.target.value)}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Price</FormLabel>
-              <Input placeholder="100.0" />
+              <Input
+                placeholder="100.0"
+                type="number"
+                onChange={(e) => setPrice(e.target.value)}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Currency</FormLabel>
-              <Select defaultValue="usd">
-                <option value="usd">USD</option>
-                <option value="eur">EUR</option>
+              <Select
+                defaultValue="EUR"
+                onChange={(e) => setCur(e.target.value)}
+              >
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
               </Select>
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button colorScheme="blue" mr={3} onClick={addInvestment}>
               Save
             </Button>
             <Button onClick={onClose}>Cancel</Button>

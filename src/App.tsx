@@ -15,15 +15,16 @@ const emailFetcher = async () => {
     return undefined;
   }
 
-  return await r.text();
+  return await r.json();
 };
 
 function App() {
   const { data, error, isLoading } = useSWR("email", emailFetcher);
+  const isAuthenticated = !(data === null || data === undefined);
 
   return (
     <Flex minH="100vh">
-      <Sidebar username={data} />
+      <Sidebar username={isAuthenticated ? data.email : null} />
       <Box flex="1">
         <Header />
         <Body />
