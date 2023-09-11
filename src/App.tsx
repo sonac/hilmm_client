@@ -27,7 +27,7 @@ function App() {
       <Sidebar username={isAuthenticated ? data.email : null} />
       <Box flex="1">
         <Header />
-        <Body />
+        <Body user={data} />
       </Box>
     </Flex>
   );

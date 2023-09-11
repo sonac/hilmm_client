@@ -2,6 +2,7 @@ import { Box, Button, useDisclosure } from "@chakra-ui/react";
 import MainTable from "./MainTable";
 import MainChart from "./MainChart";
 import AddInvestmentModal from "./AddInvestmentModal";
+import { User } from "../interfaces/user";
 
 const data = [
   {
@@ -276,7 +277,11 @@ const data = [
   },
 ];
 
-export default function Body() {
+interface BodyProps {
+  user?: User;
+}
+
+export default function Body(props: BodyProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -284,7 +289,7 @@ export default function Body() {
       <Button m="1em" onClick={onOpen}>
         Add Investment
       </Button>
-      <MainTable />
+      <MainTable portfolio={props.user?.portfolio} />
       <div style={{ height: "400px" }}>
         <MainChart data={data} />
       </div>
