@@ -30,7 +30,9 @@ export default function AuthModal({ isOpen, onClose }: any) {
       pwd: password,
     };
 
-    await fetch("http://localhost:8000/api/signin", {
+    const endpoint = authType === "Login" ? "signin" : "signup";
+
+    await fetch(`http://localhost:8000/api/${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
