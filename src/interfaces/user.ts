@@ -14,7 +14,13 @@ export interface UserPortfolio {
   userAssets: UserAsset[];
 }
 
+export interface PortfolioState {
+  totalValue: number,
+  timestamp: Date
+}
+
 export interface User {
   email: string, 
-  portfolio: UserPortfolio
+  portfolio: UserPortfolio,
+  portfolioStates: Array<PortfolioState>
 }

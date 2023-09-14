@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 
 import useSWR from "swr";
+import { snakeToCamel } from "./utils/camelize";
 
 const emailFetcher = async () => {
   const r = await fetch(`http://localhost:8000/api/validate`, {
@@ -27,7 +28,7 @@ function App() {
       <Sidebar username={isAuthenticated ? data.email : null} />
       <Box flex="1">
         <Header />
-        <Body user={data} />
+        <Body user={snakeToCamel(data)} />
       </Box>
     </Flex>
   );
