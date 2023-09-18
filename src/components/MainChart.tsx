@@ -1,11 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import { ResponsiveLine } from "@nivo/line";
 
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
 export default function MainChart({ data /* see data tab */ }: any) {
   const onClick = async () => {
     const resp = await fetch("http://localhost:8000/api/portfolio-timeline", {
@@ -15,6 +10,47 @@ export default function MainChart({ data /* see data tab */ }: any) {
       credentials: "include",
     });
     console.log(await resp.json());
+  };
+
+  const chartTheme = () => {
+    return {
+      grid: {
+        line: {
+          stroke: "rgba(0,0,0,0.05)",
+        },
+      },
+      axis: {
+        legend: {
+          text: {
+            fill: "rgba(0,0,0,0.3)",
+            fontSize: 12,
+          },
+        },
+        ticks: {
+          text: {
+            fill: "rgba(0,0,0,0.3)",
+            fontSize: 12,
+          },
+          line: {
+            stroke: "rgba(0,0,0,0.3)",
+            strokeWidth: 1,
+          },
+        },
+        domain: {
+          line: {
+            stroke: "rgba(0,0,0,0.1)",
+            strokeWidth: 1,
+          },
+        },
+      },
+      crosshair: {
+        line: {
+          stroke: "rgba(0,0,0,0.5)",
+          strokeWidth: 1,
+          strokeOpacity: 0.35,
+        },
+      },
+    };
   };
 
   return (
@@ -32,16 +68,9 @@ export default function MainChart({ data /* see data tab */ }: any) {
           reverse: false,
         }}
         yFormat=" >-.2f"
+        axisBottom={null}
         axisTop={null}
         axisRight={null}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "transportation",
-          legendOffset: 36,
-          legendPosition: "middle",
-        }}
         axisLeft={{
           tickSize: 5,
           tickPadding: 5,
@@ -56,32 +85,7 @@ export default function MainChart({ data /* see data tab */ }: any) {
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         useMesh={true}
-        legends={[
-          {
-            anchor: "bottom-right",
-            direction: "column",
-            justify: false,
-            translateX: 100,
-            translateY: 0,
-            itemsSpacing: 0,
-            itemDirection: "left-to-right",
-            itemWidth: 80,
-            itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: "circle",
-            symbolBorderColor: "rgba(0, 0, 0, .5)",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemBackground: "rgba(0, 0, 0, .03)",
-                  itemOpacity: 1,
-                },
-              },
-            ],
-          },
-        ]}
+        theme={chartTheme()}
       />
     </>
   );

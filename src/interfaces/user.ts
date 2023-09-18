@@ -8,14 +8,16 @@ export interface UserAsset {
   asset: Asset;
   amount: number;
   currentValue: number;
+  invested: number;
 }
 
 export interface UserPortfolio {
   userAssets: UserAsset[];
+  totalValue: number;
 }
 
 export interface PortfolioState {
-  totalValue: number,
+  portfolio: UserPortfolio
   timestamp: Date
 }
 

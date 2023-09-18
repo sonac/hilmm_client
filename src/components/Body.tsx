@@ -23,8 +23,8 @@ const toChartData = (pStates: Array<PortfolioState>): Array<ChartData> => {
       id: "portfolioData",
       data: pStates.map((ps) => ({
         //@ts-ignore
-        x: ps.timestamp["date"]["numberLong"], // Convert timestamp to a Date object
-        y: ps.totalValue,
+        x: new Date(parseInt(ps.timestamp["date"]["numberLong"])), // Convert timestamp to a Date object
+        y: ps.portfolio.totalValue,
       })),
     },
   ];
@@ -36,7 +36,7 @@ export default function Body(props: BodyProps) {
   console.log(props.user);
 
   if (!props.user) {
-    return <></>;
+    return <>Please login to continue</>;
   }
 
   const ch_data = toChartData(props.user.portfolioStates);
@@ -46,7 +46,7 @@ export default function Body(props: BodyProps) {
       <Button m="1em" onClick={onOpen}>
         Add Investment
       </Button>
-      <MainTable portfolio={props.user?.portfolio} />
+      <MainTable portfolio={props.user.portfolio} />
       <div style={{ height: "400px" }}>
         <MainChart data={ch_data} />
       </div>
