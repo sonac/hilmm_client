@@ -21,11 +21,18 @@ const toChartData = (pStates: Array<PortfolioState>): Array<ChartData> => {
   return [
     {
       id: "portfolioData",
-      data: pStates.map((ps) => ({
-        //@ts-ignore
-        x: new Date(parseInt(ps.timestamp["date"]["numberLong"])), // Convert timestamp to a Date object
-        y: ps.portfolio.totalValue,
-      })),
+      data: pStates
+        .filter(
+          (ps) =>
+            ps.portfolio.totalValue !== null &&
+            //@ts-ignore
+            ps.timestamp["date"]["numberLong"] !== null
+        )
+        .map((ps) => ({
+          //@ts-ignore
+          x: new Date(parseInt(ps.timestamp["date"]["numberLong"])), // Convert timestamp to a Date object
+          y: ps.portfolio.totalValue,
+        })),
     },
   ];
 };
@@ -48,7 +55,12 @@ export default function Body(props: BodyProps) {
       </Button>
       <MainTable portfolio={props.user.portfolio} />
       <div style={{ height: "400px" }}>
-        <MainChart data={ch_data} />
+        <MainChart
+          data={ch_data}
+          invested={props.user.portfolio.userAssets
+            .map((x) => x.invested)
+            .reduce((x, y) => x + y)}
+        />
       </div>
       <AddInvestmentModal isOpen={isOpen} onClose={onClose} />
     </Box>

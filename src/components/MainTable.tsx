@@ -58,6 +58,9 @@ export default function MainTable(props: MainTableProps) {
             <Th borderWidth="1px" isNumeric>
               Invested
             </Th>
+            <Th borderWidth="1px" isNumeric>
+              Profit
+            </Th>
             <Th borderWidth="1px">Sell</Th>
           </Tr>
         </Thead>
@@ -77,8 +80,16 @@ export default function MainTable(props: MainTableProps) {
                 <Td borderWidth="1px" isNumeric key={ast.currentValue}>
                   {ast.currentValue}
                 </Td>
-                <Td borderWidth="1px" isNumeric key={ast.currentValue}>
+                <Td borderWidth="1px" isNumeric key={ast.invested}>
                   {ast.invested}
+                </Td>
+                <Td
+                  borderWidth="1px"
+                  isNumeric
+                  key={ast.currentValue - ast.invested}
+                  color={ast.currentValue - ast.invested > 0 ? "green" : "red"}
+                >
+                  {(ast.currentValue - ast.invested).toFixed(2)}
                 </Td>
                 <Td key={`${ast.asset.name}_key`}>
                   <Button
