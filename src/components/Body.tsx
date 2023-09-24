@@ -53,15 +53,21 @@ export default function Body(props: BodyProps) {
       <Button m="1em" onClick={onOpen}>
         Add Investment
       </Button>
-      <MainTable portfolio={props.user.portfolio} />
-      <div style={{ height: "400px" }}>
-        <MainChart
-          data={ch_data}
-          invested={props.user.portfolio.userAssets
-            .map((x) => x.invested)
-            .reduce((x, y) => x + y)}
-        />
-      </div>
+      {!(props.user.portfolio.userAssets.length > 0) ? (
+        <></>
+      ) : (
+        <div>
+          <MainTable portfolio={props.user.portfolio} />
+          <div style={{ height: "400px" }}>
+            <MainChart
+              data={ch_data}
+              invested={props.user.portfolio.userAssets
+                .map((x) => x.invested)
+                .reduce((x, y) => x + y)}
+            />
+          </div>
+        </div>
+      )}
       <AddInvestmentModal isOpen={isOpen} onClose={onClose} />
     </Box>
   );

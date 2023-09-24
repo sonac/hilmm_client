@@ -27,7 +27,7 @@ export default function MainTable(props: MainTableProps) {
     const assetBody = {
       asset_name: assetName,
     };
-    await fetch(`http://localhost:8000/api/asset`, {
+    await fetch(`http://0.0.0.0:8000/api/asset`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

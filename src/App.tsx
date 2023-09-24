@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { snakeToCamel } from "./utils/camelize";
 
 const emailFetcher = async () => {
-  const r = await fetch(`http://localhost:8000/api/validate`, {
+  const r = await fetch(`http://0.0.0.0:8000/api/validate`, {
     method: "GET",
     credentials: "include",
   });

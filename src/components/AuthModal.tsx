@@ -32,7 +32,7 @@ export default function AuthModal({ isOpen, onClose }: any) {
 
     const endpoint = authType === "Login" ? "signin" : "signup";
 
-    await fetch(`http://localhost:8000/api/${endpoint}`, {
+    const resp = await fetch(`http://0.0.0.0:8000/api/${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,6 +40,8 @@ export default function AuthModal({ isOpen, onClose }: any) {
       credentials: "include",
       body: JSON.stringify(authData),
     });
+
+    console.log(await resp.json());
 
     location.assign("/");
   };
