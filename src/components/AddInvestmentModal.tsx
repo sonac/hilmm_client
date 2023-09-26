@@ -39,7 +39,7 @@ export default function AddInvestmentModal({ isOpen, onClose }: any) {
       currency: cur,
     };
 
-    await fetch("http://localhost:8000/api/asset", {
+    await fetch("/api/asset", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

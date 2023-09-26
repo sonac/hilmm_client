@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  reproxy:
+      image: umputun/reproxy:master
+      container_name: reproxy
+      hostname: reproxy
+      networks:
+        - hilmm
+      ports:
+        - "80:8080"
+        - "443:8443"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - /var/ssl:/srv/var/ssl
+      environment:
+        - TZ=Europe/Berlin
+        - DOCKER_ENABLED=true
+        - DOCKER_AUTO=true
+        - DEBUG=true
+        - HEADER=
+            X-Frame-Option:SAMEORIGIN,
+            X-XSS-Protection:1; mode=block;,
+
+  hilmm:
+    image: hilmm
+    container_name: api
+    networks:
+      - hilmm
+    env_file:
+      - .env.server
+
+  hilmm_client:
+    image: hilmm_client
+    container_name: client
+    networks:
+      - hilmm
+    labels:
+      reproxy.server: '*'
+      reproxy.route: '^/(.*)'
+      reproxy.dest: '/$$1'
+
+networks:
+  hilmm:
+    driver: bridge

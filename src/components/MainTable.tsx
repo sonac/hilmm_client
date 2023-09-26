@@ -2,7 +2,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -27,7 +26,7 @@ export default function MainTable(props: MainTableProps) {
     const assetBody = {
       asset_name: assetName,
     };
-    await fetch(`http://0.0.0.0:8000/api/asset`, {
+    await fetch(`/api/asset`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -1,9 +1,9 @@
 import { Button } from "@chakra-ui/react";
-import { ResponsiveLine, CustomLayer } from "@nivo/line";
+import { ResponsiveLine } from "@nivo/line";
 
 export default function MainChart({ data, invested }: any) {
   const onClick = async () => {
-    const resp = await fetch("http://localhost:8000/api/portfolio-timeline", {
+    const resp = await fetch("/api/portfolio-timeline", {
       headers: {
         "Content-Type": "application/json",
       },
