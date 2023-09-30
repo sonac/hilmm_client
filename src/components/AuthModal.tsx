@@ -67,6 +67,9 @@ export default function AuthModal({ isOpen, onClose }: any) {
                 placeholder="password"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={async (k) => {
+                  if (k.key == "Enter") await auth();
+                }}
               />
             </FormControl>
           </ModalBody>
