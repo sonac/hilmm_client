@@ -80,7 +80,7 @@ export default function MainTable(props: MainTableProps) {
                   {ast.currentValue}
                 </Td>
                 <Td borderWidth="1px" isNumeric key={ast.invested}>
-                  {ast.invested}
+                  {ast.invested.toFixed(2)}
                 </Td>
                 <Td
                   borderWidth="1px"
