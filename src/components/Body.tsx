@@ -12,7 +12,7 @@ interface ChartDataPoint {
   x: Date;
   y: number;
 }
-interface ChartData {
+export interface ChartData {
   id: string;
   data: Array<ChartDataPoint>;
 }

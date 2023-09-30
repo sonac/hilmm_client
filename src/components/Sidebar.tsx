@@ -9,7 +9,7 @@ export default function Sidebar(props: SidebarProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const logout = async () => {
-    await fetch("http://0.0.0.0:8000/api/signout", {
+    await fetch("/api/signout", {
       method: "GET",
       credentials: "include",
     });
