@@ -2,40 +2,11 @@ import { Box, Button, useDisclosure } from "@chakra-ui/react";
 import MainTable from "./MainTable";
 import MainChart from "./MainChart";
 import AddInvestmentModal from "./AddInvestmentModal";
-import { PortfolioState, User } from "../interfaces/user";
+import { User } from "../interfaces/user";
 
 interface BodyProps {
   user?: User;
 }
-
-interface ChartDataPoint {
-  x: Date;
-  y: number;
-}
-export interface ChartData {
-  id: string;
-  data: Array<ChartDataPoint>;
-}
-
-const toChartData = (pStates: Array<PortfolioState>): Array<ChartData> => {
-  return [
-    {
-      id: "portfolioData",
-      data: pStates
-        .filter(
-          (ps) =>
-            ps.portfolio.totalValue !== null &&
-            //@ts-ignore
-            ps.timestamp["date"]["numberLong"] !== null
-        )
-        .map((ps) => ({
-          //@ts-ignore
-          x: new Date(parseInt(ps.timestamp["date"]["numberLong"])), // Convert timestamp to a Date object
-          y: ps.portfolio.totalValue,
-        })),
-    },
-  ];
-};
 
 export default function Body(props: BodyProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,8 +16,6 @@ export default function Body(props: BodyProps) {
   if (!props.user) {
     return <>Please login to continue</>;
   }
-
-  const ch_data = toChartData(props.user.portfolioStates);
 
   return (
     <Box flex="1" flexDir="column">
@@ -60,7 +29,6 @@ export default function Body(props: BodyProps) {
           <MainTable portfolio={props.user.portfolio} />
           <div style={{ height: "400px" }}>
             <MainChart
-              data={ch_data}
               invested={props.user.portfolio.userAssets
                 .map((x) => x.invested)
                 .reduce((x, y) => x + y)}
