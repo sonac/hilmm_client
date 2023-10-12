@@ -95,6 +95,12 @@ export default function AuthModal({ isOpen, onClose }: any) {
                   Register
                 </Link>
               </GridItem>
+              <GridItem w="100%" colSpan={4}>
+                Forgot passowrd?{" "}
+                <Link color="blue" onClick={() => console.log("foo")}>
+                  Reset
+                </Link>
+              </GridItem>
             </Grid>
           </ModalFooter>
         </ModalContent>
