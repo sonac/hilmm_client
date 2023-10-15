@@ -36,7 +36,12 @@ export default function Body(props: BodyProps) {
           </div>
         </div>
       )}
-      <AddInvestmentModal isOpen={isOpen} onClose={onClose} />
+      <AddInvestmentModal
+        isOpen={isOpen}
+        onClose={onClose}
+        investmentName=""
+        investmentTickerName=""
+      />
     </Box>
   );
 }

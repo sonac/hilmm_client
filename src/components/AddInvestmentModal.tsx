@@ -14,18 +14,21 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-/*
-{
-  "ticker": "META",
-  "name": "Meta",
-  "paid": 232,
-  "amount": 2,
-  "currency": "EUR"
-}*/
+interface InvestmentModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  investmentName: string;
+  investmentTickerName: string;
+}
 
-export default function AddInvestmentModal({ isOpen, onClose }: any) {
-  const [invName, setInvName] = useState("");
-  const [tickerName, setTickerName] = useState("");
+export default function AddInvestmentModal({
+  isOpen,
+  onClose,
+  investmentName = "",
+  investmentTickerName = "",
+}: InvestmentModalProps) {
+  const [invName, setInvName] = useState(investmentName);
+  const [tickerName, setTickerName] = useState(investmentTickerName);
   const [amnt, setAmnt] = useState("");
   const [price, setPrice] = useState("");
   const [cur, setCur] = useState("EUR");
@@ -51,6 +54,12 @@ export default function AddInvestmentModal({ isOpen, onClose }: any) {
     location.assign("/");
   };
 
+  // Somehow useState(investmentName) doesn't do the trick
+  if (investmentName != "" && invName == "") {
+    setInvName(investmentName);
+    setTickerName(investmentTickerName);
+  }
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -62,6 +71,7 @@ export default function AddInvestmentModal({ isOpen, onClose }: any) {
             <FormControl>
               <FormLabel>Investment Name</FormLabel>
               <Input
+                value={investmentName}
                 placeholder="Stock"
                 onChange={(e) => setInvName(e.target.value)}
               />
@@ -69,6 +79,7 @@ export default function AddInvestmentModal({ isOpen, onClose }: any) {
             <FormControl>
               <FormLabel>Ticker</FormLabel>
               <Input
+                value={investmentTickerName}
                 placeholder="STCK"
                 onChange={(e) => setTickerName(e.target.value)}
               />
