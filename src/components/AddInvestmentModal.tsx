@@ -33,6 +33,8 @@ export default function AddInvestmentModal({
   const [price, setPrice] = useState("");
   const [cur, setCur] = useState("EUR");
 
+  console.log(invName);
+
   const addInvestment = async () => {
     const assetData = {
       ticker: tickerName,
@@ -71,7 +73,7 @@ export default function AddInvestmentModal({
             <FormControl>
               <FormLabel>Investment Name</FormLabel>
               <Input
-                value={investmentName}
+                value={invName}
                 placeholder="Stock"
                 onChange={(e) => setInvName(e.target.value)}
               />
@@ -79,7 +81,7 @@ export default function AddInvestmentModal({
             <FormControl>
               <FormLabel>Ticker</FormLabel>
               <Input
-                value={investmentTickerName}
+                value={tickerName}
                 placeholder="STCK"
                 onChange={(e) => setTickerName(e.target.value)}
               />
