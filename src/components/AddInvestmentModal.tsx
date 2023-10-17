@@ -33,8 +33,6 @@ export default function AddInvestmentModal({
   const [price, setPrice] = useState("");
   const [cur, setCur] = useState("EUR");
 
-  console.log(invName);
-
   const addInvestment = async () => {
     const assetData = {
       ticker: tickerName,
