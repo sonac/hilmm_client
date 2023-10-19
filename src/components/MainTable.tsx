@@ -11,7 +11,7 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
-import { UserPortfolio, UserAsset } from "../interfaces/user";
+import { Asset, UserPortfolio, UserAsset } from "../interfaces/user";
 import { snakeToCamel } from "../utils/camelize";
 import AddInvestmentModal from "./AddInvestmentModal";
 import { useState } from "react";
@@ -46,6 +46,18 @@ export default function MainTable(props: MainTableProps) {
   };
 
   const portfolio: UserPortfolio = snakeToCamel(props.portfolio);
+  const totalInvested: number = portfolio.userAssets
+    .map((x) => x.invested)
+    .reduce((a, b) => a + b);
+  const totalAsset: Asset = { name: "Total", ticker: "", price: -1 };
+  const totalLine: UserAsset = {
+    asset: totalAsset,
+    amount: -1,
+    currentValue: portfolio.totalValue,
+    invested: totalInvested,
+  };
+
+  const userAssets = [...portfolio.userAssets, totalLine];
 
   return (
     <TableContainer>
@@ -76,7 +88,7 @@ export default function MainTable(props: MainTableProps) {
           </Tr>
         </Thead>
         <Tbody>
-          {portfolio.userAssets.map((ast: UserAsset) => {
+          {userAssets.map((ast: UserAsset) => {
             return (
               <Tr key={`${ast.asset.name}_row`}>
                 <Td borderWidth="1px" key={ast.asset.name}>
@@ -86,7 +98,7 @@ export default function MainTable(props: MainTableProps) {
                   {ast.asset.ticker}
                 </Td>
                 <Td borderWidth="1px" key={ast.asset.price} isNumeric>
-                  {ast.asset.price}
+                  {ast.asset.price > 0 ? ast.asset.price : ""}
                 </Td>
                 <Td borderWidth="1px" isNumeric key={ast.currentValue}>
                   {ast.currentValue}
