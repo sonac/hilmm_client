@@ -1,4 +1,4 @@
-interface Asset {
+export interface Asset {
   name: string;
   ticker: string;
   price: number;
