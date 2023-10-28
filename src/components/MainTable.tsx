@@ -53,8 +53,8 @@ export default function MainTable(props: MainTableProps) {
   const totalLine: UserAsset = {
     asset: totalAsset,
     amount: -1,
-    currentValue: portfolio.totalValue,
-    invested: totalInvested,
+    currentValue: Math.round(portfolio.totalValue * 100) / 100,
+    invested: Math.round(totalInvested * 100) / 100,
   };
 
   const userAssets = [...portfolio.userAssets, totalLine];
