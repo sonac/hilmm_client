@@ -115,7 +115,7 @@ export default function MainTable(props: MainTableProps) {
                   {(ast.currentValue - ast.invested).toFixed(2)}
                 </Td>
                 <Td key={`${ast.asset.name}_buy_key`}>
-                  <Button
+                  {ast.asset.name !== 'Total' ? <Button
                     key={`${ast.asset.name}_buy_button`}
                     variant="solid"
                     colorScheme="green"
@@ -126,17 +126,17 @@ export default function MainTable(props: MainTableProps) {
                     }}
                   >
                     Buy
-                  </Button>
+                  </Button> : <></>}
                 </Td>
                 <Td key={`${ast.asset.name}_key`}>
-                  <Button
+                  {ast.asset.name !== 'Total' ? <Button
                     key={`${ast.asset.name}_sell_button`}
                     variant="solid"
                     colorScheme="red"
                     onClick={() => sellAsset(ast.asset.name)}
                   >
                     Sell
-                  </Button>
+                  </Button>: <></>}
                 </Td>
               </Tr>
             );
